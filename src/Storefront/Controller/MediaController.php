@@ -11,9 +11,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @RouteScope(scopes={"storefront"})
- */
+#[Route(defaults: ['_routeScope' => ['storefront']])]
 class MediaController extends StorefrontController
 {
     private FilesystemInterface $filesystem;
@@ -27,9 +25,8 @@ class MediaController extends StorefrontController
         $this->systemConfigService = $systemConfigService;
     }
 
-    /**
-     * @Route("/mediaproxy/{wildcard}", name="frontend.mediaproxy.index", options={"seo"="false"}, methods={"GET"}, defaults={"XmlHttpRequest"=false}, requirements={"wildcard"=".*"})
-     */
+
+    #[Route(path:"/mediaproxy/{wildcard}", name:"frontend.mediaproxy.index", options:["seo" => "false"], methods:["GET"], defaults:["XmlHttpRequest" => false], requirements:["wildcard" => ".*"])]
     public function mediaproxy(string $wildcard, Request $request, SalesChannelContext $context): RedirectResponse
     {
         $queryString = $request->getQueryString();
